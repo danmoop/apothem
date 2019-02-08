@@ -1,9 +1,11 @@
 <ion-app>
   <ion-split-pane>
     <ion-menu>
-      <ion-header>
+      <ion-header no-border style="border-bottom: 1px solid #e0e0e0;">
         <ion-toolbar>
-          <ion-title>Menu</ion-title>
+          <ion-title><span class="app-title">Apothem</span> 
+            <ion-badge color="primary">Beta</ion-badge>
+          </ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-content>
@@ -12,7 +14,7 @@
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">
               <ion-icon slot="start" [name]="p.icon"></ion-icon>
               <ion-label>
-                {{p.title}}
+                <span class="eina">{{p.title}}</span>
               </ion-label>
             </ion-item>
           </ion-menu-toggle>
