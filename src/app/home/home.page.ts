@@ -24,6 +24,8 @@ export class HomePage {
     var user = localStorage.getItem('user');
 
     if(user == null) this.navCtrl.navigateRoot('authorization');
+
+    else this.authorized = true;
   }
 
   sendRequest()

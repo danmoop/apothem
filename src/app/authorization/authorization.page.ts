@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { MenuController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
+
+import { CreateaccountPage } from './../createaccount/createaccount.page';
 
 @Component({
   selector: 'app-authorization',
@@ -8,11 +10,21 @@ import { MenuController } from '@ionic/angular';
 })
 export class AuthorizationPage implements OnInit {
 
-  constructor(private menuCtrl: MenuController) { }
+  constructor(private navCtrl: NavController, private menuCtrl: MenuController) { }
 
   ngOnInit() {
     console.log("AUTH Opened");
       this.menuCtrl.enable(false);
+  }
+
+  showModal()
+  {
+    this.navCtrl.navigateBack('/createaccount');
+  }
+
+  signIn()
+  {
+    this.navCtrl.navigateBack('/signin');
   }
 
 }

@@ -1,0 +1,20 @@
+<ion-content padding text-center>
+  <h1 class="eina">Register</h1>
+  <hr class="divider">
+  <img class="icon" src="./../../assets/img/rocket.png">
+
+  <ion-item>
+    <ion-label position="floating">Name</ion-label>
+    <ion-input [(ngModel)]="name"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Username</ion-label>
+    <ion-input [(ngModel)]="username"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-label position="floating">Password</ion-label>
+    <ion-input [(ngModel)]="password" type="password"></ion-input>
+  </ion-item>
+
+  <ion-button fill="clear" style="margin-top: 2rem;" (click)="proceed()">Proceed</ion-button>
+</ion-content>
