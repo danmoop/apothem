@@ -1,5 +1,7 @@
 {
   "name": "apothem",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }

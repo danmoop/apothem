@@ -32,7 +32,7 @@ export class CreateaccountPage implements OnInit {
         password: Crypto.MD5(this.password).toString()
       }
 
-      axios.post(this.API + "/register", user)
+      axios.post(this.API + "register", user)
         .then(response => {
           if(response.data == "Success")
           {
@@ -50,13 +50,13 @@ export class CreateaccountPage implements OnInit {
               ]
             }).then(modal => modal.present());
           }
-          else this.alert("Error", "This username is already taken");
+          else this.alert("Oops", "This username is already taken");
         })
         .catch(err => this.alert("Error", err));
     }
 
     else
-      this.alert("Error", "All fields are required!");
+      this.alert("Oops", "All fields are required!");
   }
 
   alert(header, message)

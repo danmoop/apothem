@@ -8,6 +8,7 @@ import java.util.List;
 public interface UserService extends MongoRepository<User, String>
 {
     User findByUsername(String username);
+    User findByToken(String token);
 
     List<User> findAll();
 }

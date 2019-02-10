@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import axios from 'axios';
-import { AlertController, NavController } from '@ionic/angular';
+import { AlertController, NavController, ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +15,7 @@ export class HomePage {
   
   public API = "http://localhost:1337/";
 
-  constructor(private alertCtrl: AlertController, private navCtrl: NavController) {
+  constructor(private toastCtrl: ToastController, private alertCtrl: AlertController, private navCtrl: NavController) {
 
   }
 
@@ -25,7 +25,30 @@ export class HomePage {
 
     if(user == null) this.navCtrl.navigateRoot('authorization');
 
-    else this.authorized = true;
+    else 
+    {
+      let ls_user = JSON.parse(localStorage.getItem('user'));
+
+      axios.post(this.API + "getUser", ls_user)
+        .then(response => {
+          if(response.data == false)
+          {
+            localStorage.removeItem('user');
+            this.navCtrl.navigateRoot('authorization');
+          }
+          else {
+            this.authorized = true;
+            this.toastCtrl.create({
+              message: "Hello, " + ls_user.name,
+              duration: 2500
+            }).then(toast => toast.present());
+          }
+        })
+        .catch(err => {
+          this.alert("Error", err);
+          this.navCtrl.navigateRoot('authorization');
+        });
+    }
   }
 
   sendRequest()
@@ -39,6 +62,22 @@ export class HomePage {
     axios.get(this.API + "/getId")
       .then(response => this.message = response.data)
       .catch(err => console.log(err));
+  }
+
+  alert(header, message)
+  {
+    let modal = this.alertCtrl.create({
+      header: header,
+      subHeader: null,
+      message: message,
+      buttons: ['OK']
+    }).then(modal => modal.present());
+  }
+
+  logout()
+  {
+    localStorage.removeItem('user');
+    this.navCtrl.navigateRoot('authorization');
   }
 
 }
