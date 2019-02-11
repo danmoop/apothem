@@ -11,10 +11,6 @@ const routes: Routes = [
     path: 'home',
     loadChildren: './home/home.module#HomePageModule'
   },
-  {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
-  },
   { path: 'authorization', loadChildren: './authorization/authorization.module#AuthorizationPageModule' },
   { path: 'createaccount', loadChildren: './createaccount/createaccount.module#CreateaccountPageModule' },
   { path: 'signin', loadChildren: './signin/signin.module#SigninPageModule' }

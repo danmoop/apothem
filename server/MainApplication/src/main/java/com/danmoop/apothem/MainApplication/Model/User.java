@@ -3,6 +3,8 @@ package com.danmoop.apothem.MainApplication.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.List;
+
 @Document(value = "users")
 public class User
 {
@@ -13,6 +15,8 @@ public class User
     private String name;
     private String password;
     private String token;
+
+    private List<String> topics;
 
     public String getUsername() {
         return username;
@@ -55,5 +59,18 @@ public class User
                 ", password='" + password + '\'' +
                 ", token='" + token + '\'' +
                 '}';
+    }
+
+    public void setTopics(List<String> topics) {
+        this.topics = topics;
+    }
+
+    public List<String> getTopics() {
+        return topics;
+    }
+
+    public void addTopic(String topic)
+    {
+        topics.add(topic);
     }
 }

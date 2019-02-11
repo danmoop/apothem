@@ -37,7 +37,8 @@ export class SigninPage implements OnInit {
             var user1 = {
               name: response.data.name,
               username: response.data.username,
-              token: response.data.token
+              token: response.data.token,
+              topics: response.data.topics
             }
 
             localStorage.setItem('user', JSON.stringify(user1));

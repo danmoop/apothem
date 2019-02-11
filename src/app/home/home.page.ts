@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import axios from 'axios';
-import { AlertController, NavController, ToastController } from '@ionic/angular';
+import { AlertController, NavController, ToastController, MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +15,28 @@ export class HomePage {
   
   public API = "http://localhost:1337/";
 
-  constructor(private toastCtrl: ToastController, private alertCtrl: AlertController, private navCtrl: NavController) {
+  public user = null;
+
+  public cards = [
+    {
+      name: 'Math',
+      content: 'Everything about math'
+    },
+    {
+      name: 'Physics',
+      content: 'Everything about physics'
+    },
+    {
+      name: 'Computer Science',
+      content: 'Everything about CS'
+    },
+    {
+      name: 'History',
+      content: 'Everything about history'
+    }
+  ];
+
+  constructor(private menuCtrl: MenuController, private toastCtrl: ToastController, private alertCtrl: AlertController, private navCtrl: NavController) {
 
   }
 
@@ -27,27 +48,11 @@ export class HomePage {
 
     else 
     {
-      let ls_user = JSON.parse(localStorage.getItem('user'));
-
-      axios.post(this.API + "getUser", ls_user)
-        .then(response => {
-          if(response.data == false)
-          {
-            localStorage.removeItem('user');
-            this.navCtrl.navigateRoot('authorization');
-          }
-          else {
-            this.authorized = true;
-            this.toastCtrl.create({
-              message: "Hello, " + ls_user.name,
-              duration: 2500
-            }).then(toast => toast.present());
-          }
-        })
-        .catch(err => {
-          this.alert("Error", err);
-          this.navCtrl.navigateRoot('authorization');
-        });
+      this.toastCtrl.create({
+        message: "Hello, " + JSON.parse(localStorage.getItem('user')).name,
+        duration: 2000
+      }).then(toast => toast.present());
+      this.refreshProfile();        
     }
   }
 
@@ -74,10 +79,29 @@ export class HomePage {
     }).then(modal => modal.present());
   }
 
-  logout()
+  refreshProfile()
   {
-    localStorage.removeItem('user');
-    this.navCtrl.navigateRoot('authorization');
+    let ls_user = JSON.parse(localStorage.getItem('user'));
+
+    axios.post(this.API + "getUser", ls_user)
+      .then(response => {
+        if(response.data == "")
+        {
+          localStorage.removeItem('user');
+          this.navCtrl.navigateRoot('authorization');
+        }
+        else {
+          if(!this.authorized) this.authorized = true;
+          
+          localStorage.setItem('user', JSON.stringify(response.data));
+          this.user = response.data;
+          this.menuCtrl.enable(true);
+        }
+      })
+      .catch(err => {
+        this.alert("Error", err);
+        this.navCtrl.navigateRoot('authorization');
+      });
   }
 
 }

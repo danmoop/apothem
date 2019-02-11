@@ -5,6 +5,7 @@ import com.danmoop.apothem.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 @RestController
@@ -24,6 +25,7 @@ public class AuthController
             return "This username is already taken";
 
         user.setToken(UUID.randomUUID().toString());
+        user.setTopics(new ArrayList<>());
 
         userService.save(user);
 
@@ -49,10 +51,13 @@ public class AuthController
     }
 
     @PostMapping("/getUser")
-    public boolean isUserValid(@RequestBody User user)
+    public User isUserValid(@RequestBody User user)
     {
         User userDB = userService.findByUsername(user.getUsername());
 
-        return userDB != null && user.getToken().equals(userDB.getToken()) && userDB.getName().equals(user.getName());
+        if(userDB != null && user.getToken().equals(userDB.getToken()) && userDB.getName().equals(user.getName()))
+            return userDB;
+
+        return null;
     }
 }
