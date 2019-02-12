@@ -18,34 +18,39 @@
       <ion-button shape="round" fill="outline">Configure your topics</ion-button>
     </div>
     <div class="topics" *ngIf="user.topics.length != 0">
-      <ion-list>
-        <ion-item *ngFor="let topic of user.topics">
-          <ion-label>{{ topic }}</ion-label>
-        </ion-item>
-      </ion-list>
+      <ion-card *ngFor="let topic of user.topics">
+          <ion-card-header>
+            <ion-card-subtitle>Topic</ion-card-subtitle>
+            <ion-card-title>{{ topic }}</ion-card-title>
+          </ion-card-header>
+      
+          <ion-button fill="clear">Explore</ion-button>
+        </ion-card>
     </div>
   </ion-list>
 
   <hr class="divider">
 
-  <div text-center>
-    <h1>Explore basic topics</h1>
-
-    <ion-button fill="clear">Global topic search</ion-button>
+  <div *ngIf="user.topics.length == 0">
+      <div text-center>
+          <h1>Explore basic topics</h1>
+      
+          <ion-button fill="clear">Global topic search</ion-button>
+        </div>
+      
+        <ion-card *ngFor="let card of cards">
+          <ion-card-header>
+            <ion-card-subtitle>Topic</ion-card-subtitle>
+            <ion-card-title>{{ card.name }}</ion-card-title>
+          </ion-card-header>
+      
+          <ion-card-content>
+            {{ card.content }}
+          </ion-card-content>
+      
+          <ion-button fill="clear">Explore</ion-button>
+        </ion-card>
   </div>
-
-  <ion-card *ngFor="let card of cards">
-    <ion-card-header>
-      <ion-card-subtitle>Topic</ion-card-subtitle>
-      <ion-card-title>{{ card.name }}</ion-card-title>
-    </ion-card-header>
-
-    <ion-card-content>
-      {{ card.content }}
-    </ion-card-content>
-
-    <ion-button fill="clear">Explore</ion-button>
-  </ion-card>
 
   <h2>{{message}}</h2>
 
