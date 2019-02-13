@@ -32,6 +32,8 @@ export class AppComponent {
     }
   ];
 
+  public user = {};
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -45,6 +47,9 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+      if(localStorage.getItem('user') != null) 
+        this.user = JSON.parse(localStorage.getItem('user'));
     });
   }
 

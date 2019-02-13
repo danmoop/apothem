@@ -73,4 +73,9 @@ public class User
     {
         topics.add(topic);
     }
+
+    public void removeTopic(String topic)
+    {
+        topics.remove(topic);
+    }
 }

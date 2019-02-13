@@ -11,12 +11,13 @@
 
   <ion-list text-center>
     <ion-list-header>
-      <ion-label class="eina bold">Topics according to your choice</ion-label>
+      <ion-label class="eina bold">Topics according to your choice ({{user.topics.length}})</ion-label>
     </ion-list-header>
     <div class="no-topics" *ngIf="user.topics.length == 0">
       <h4>Looks like you haven't configured preferable topics yet</h4>
-      <ion-button shape="round" fill="outline">Configure your topics</ion-button>
+      <ion-button shape="round" fill="clear" (click)="editTopics()">Configure your topics</ion-button>
     </div>
+
     <div class="topics" *ngIf="user.topics.length != 0">
       <ion-card *ngFor="let topic of user.topics">
           <ion-card-header>
@@ -25,8 +26,10 @@
           </ion-card-header>
       
           <ion-button fill="clear">Explore</ion-button>
+          <ion-button color="danger" fill="clear" (click)="unsubscribe(topic)">Unsubscribe</ion-button>
         </ion-card>
-    </div>
+        <ion-button shape="round" fill="clear" (click)="editTopics()">Configure your topics</ion-button>
+      </div>
   </ion-list>
 
   <hr class="divider">

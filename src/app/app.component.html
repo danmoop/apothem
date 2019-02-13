@@ -9,6 +9,14 @@
         </ion-toolbar>
       </ion-header>
       <ion-content>
+
+        <ion-item text-center>
+          <ion-label>
+            <ion-icon name="contact"></ion-icon>
+            {{user.name}} ({{user.username}})
+          </ion-label>
+        </ion-item>
+
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
             <ion-item [routerDirection]="'root'" [routerLink]="[p.url]">

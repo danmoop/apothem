@@ -1,0 +1,16 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Edit your topics</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding text-center>
+
+  <ion-item *ngFor="let topic of topics">
+    <ion-label>{{ topic.text }}</ion-label>
+    <ion-checkbox color="tertiary" slot="end" [(ngModel)]="topic.isChecked"></ion-checkbox>
+  </ion-item>
+
+  <ion-button color="tertiary" style="margin-top: 3rem;" (click)="applyChanges()">Apply changes</ion-button>
+
+</ion-content>

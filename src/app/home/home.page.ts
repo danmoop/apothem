@@ -27,8 +27,8 @@ export class HomePage {
       content: 'Everything about physics'
     },
     {
-      name: 'Computer Science',
-      content: 'Everything about CS'
+      name: 'Sociology',
+      content: 'Everything about sociology'
     },
     {
       name: 'History',
@@ -42,18 +42,14 @@ export class HomePage {
 
   ionViewWillEnter()
   {
-    var user = localStorage.getItem('user');
+    var user = this.getUser();
 
     if(user == null) this.navCtrl.navigateRoot('authorization');
 
     else 
     {
-      this.toastCtrl.create({
-        message: "Hello, " + JSON.parse(localStorage.getItem('user')).name,
-        duration: 2000
-      }).then(toast => toast.present());
       this.refreshProfile();        
-    }
+    }  
   }
 
   sendRequest()
@@ -81,8 +77,9 @@ export class HomePage {
 
   refreshProfile()
   {
-    let ls_user = JSON.parse(localStorage.getItem('user'));
 
+    let ls_user = this.getUser();
+    
     axios.post(this.API + "getUser", ls_user)
       .then(response => {
         if(response.data == "")
@@ -102,6 +99,45 @@ export class HomePage {
         this.alert("Error", err);
         this.navCtrl.navigateRoot('authorization');
       });
+  }
+
+  editTopics()
+  {
+    this.navCtrl.navigateForward('/edittopics');
+  }
+
+  unsubscribe(topic)
+  {
+    this.alertCtrl.create({
+      header: "Confirm",
+      subHeader: null,
+      message: "Do you really want to unsubscribe from " + topic + "?",
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            var _user = this.getUser();
+
+            var user1 = {
+              user: _user,
+              item: topic
+            }
+
+            axios.post(this.API + "unsubscribeFromTopic", user1)
+              .then(() => this.refreshProfile())
+              .catch(err => console.log(err));
+          }
+        },
+        {
+          text: 'No',
+        }
+      ]
+    }).then(alert => alert.present());
+  }
+
+  getUser()
+  {
+    return JSON.parse(localStorage.getItem('user'));
   }
 
 }

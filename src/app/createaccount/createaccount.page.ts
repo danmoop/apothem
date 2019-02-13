@@ -40,15 +40,8 @@ export class CreateaccountPage implements OnInit {
               header: "Success",
               subHeader: null,
               message: "Account registered successfully. Now you can sign in",
-              buttons: [
-                {
-                  text: 'OK',
-                  handler: () => {
-                    this.navCtrl.navigateRoot('/signin');
-                  }
-                }
-              ]
-            }).then(modal => modal.present());
+              buttons: ['Ok']
+            }).then(modal => modal.present()).finally(() => this.navCtrl.navigateRoot('/signin'));
           }
           else this.alert("Oops", "This username is already taken");
         })

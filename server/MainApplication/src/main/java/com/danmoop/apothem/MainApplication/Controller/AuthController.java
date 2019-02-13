@@ -10,7 +10,6 @@ import java.util.UUID;
 
 @RestController
 @CrossOrigin(value = "http://localhost:8100")
-@SessionAttributes(value = "LoggedUser")
 public class AuthController
 {
     @Autowired
@@ -33,7 +32,7 @@ public class AuthController
     }
 
     @PostMapping("/login")
-    public User getUser(@RequestBody User user)
+    public User userLogin(@RequestBody User user)
     {
         User userDB = userService.findByUsername(user.getUsername());
 
@@ -51,13 +50,20 @@ public class AuthController
     }
 
     @PostMapping("/getUser")
-    public User isUserValid(@RequestBody User user)
+    public User getUser(@RequestBody User user)
     {
         User userDB = userService.findByUsername(user.getUsername());
 
-        if(userDB != null && user.getToken().equals(userDB.getToken()) && userDB.getName().equals(user.getName()))
+        if(isUserValid(user) && userDB != null)
             return userDB;
 
         return null;
+    }
+
+    private boolean isUserValid(User user)
+    {
+        User userDB = userService.findByUsername(user.getUsername());
+
+        return userDB != null && user.getToken().equals(userDB.getToken()) && userDB.getName().equals(user.getName());
     }
 }
