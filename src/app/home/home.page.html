@@ -11,7 +11,7 @@
 
   <ion-list text-center>
     <ion-list-header>
-      <ion-label class="eina bold">Topics according to your choice ({{user.topics.length}})</ion-label>
+      <ion-label class="eina bold">Topics according to your choice <ion-badge color="primary">{{user.topics.length}}</ion-badge></ion-label>
     </ion-list-header>
     <div class="no-topics" *ngIf="user.topics.length == 0">
       <h4>Looks like you haven't configured preferable topics yet</h4>
@@ -52,6 +52,7 @@
           </ion-card-content>
       
           <ion-button fill="clear">Explore</ion-button>
+          <ion-button color="tertiary" fill="clear" (click)="subscribe(card.name)">Subscribe</ion-button>
         </ion-card>
   </div>
 

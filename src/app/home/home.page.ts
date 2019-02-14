@@ -47,9 +47,7 @@ export class HomePage {
     if(user == null) this.navCtrl.navigateRoot('authorization');
 
     else 
-    {
       this.refreshProfile();        
-    }  
   }
 
   sendRequest()
@@ -124,7 +122,14 @@ export class HomePage {
             }
 
             axios.post(this.API + "unsubscribeFromTopic", user1)
-              .then(() => this.refreshProfile())
+              .then(() => {
+                this.toastCtrl.create({
+                  message: "Unsubscribed from " + topic,
+                  duration: 2000
+                }).then(toast => toast.present());
+
+                this.refreshProfile();
+              })
               .catch(err => console.log(err));
           }
         },
@@ -133,6 +138,27 @@ export class HomePage {
         }
       ]
     }).then(alert => alert.present());
+  }
+
+  subscribe(topic) {
+
+    var _user = this.getUser();
+
+    var user1 = {
+      user: _user,
+      item: topic
+    }
+
+    axios.post(this.API + "subscribeToTopic", user1)
+      .then(() => {
+        this.toastCtrl.create({
+          message: "Subscribed to " + topic,
+          duration: 2000
+        }).then(toast => toast.present());
+
+        this.refreshProfile();
+      })
+      .catch(err => this.alert("Error", err));
   }
 
   getUser()

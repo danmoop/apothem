@@ -11,6 +11,8 @@ export class EdittopicsPage implements OnInit {
 
   API = "http://localhost:1337/";
 
+  searchText = "";
+
   topics = [
     {
       text: 'Anthropology',
@@ -93,11 +95,19 @@ export class EdittopicsPage implements OnInit {
       isChecked: false
     },
     {
+      text: 'Math',
+      isChecked: false
+    },
+    {
       text: 'Philosophy',
       isChecked: false
     },
     {
       text: 'Photography',
+      isChecked: false
+    },
+    {
+      text: 'Physics',
       isChecked: false
     },
     {

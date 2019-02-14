@@ -36,18 +36,32 @@ public class ProfileController
         }
     }
 
-    @PostMapping("/unsubscribeFromTopic")
-    public void unsubscribeFromTopic(@RequestBody Object object) throws IOException
+    @PostMapping("/subscribeToTopic")
+    public void subscribeToTopic(@RequestBody Object object) throws IOException
     {
-        Gson gson = new Gson();
-        String json = gson.toJson(object);
-        JSONObject jsonObject = new JSONObject(json);
+        JSONObject jsonObject = getJSON(object);
+
         ObjectMapper mapper = new ObjectMapper();
         User user = mapper.readValue(jsonObject.get("user").toString(), User.class);
         String topic = jsonObject.get("item").toString();
 
-        System.out.println(user.toString());
-        System.out.println(topic);
+        if(isUserValid(user))
+        {
+            User userDB = userService.findByUsername(user.getUsername());
+
+            userDB.addTopic(topic);
+
+            userService.save(userDB);
+        }
+    }
+
+    @PostMapping("/unsubscribeFromTopic")
+    public void unsubscribeFromTopic(@RequestBody Object object) throws IOException
+    {
+        JSONObject jsonObject = getJSON(object);
+        ObjectMapper mapper = new ObjectMapper();
+        User user = mapper.readValue(jsonObject.get("user").toString(), User.class);
+        String topic = jsonObject.get("item").toString();
 
         if(isUserValid(user))
         {
@@ -64,5 +78,13 @@ public class ProfileController
         User userDB = userService.findByUsername(user.getUsername());
 
         return userDB != null && user.getToken().equals(userDB.getToken()) && userDB.getName().equals(user.getName());
+    }
+
+    private JSONObject getJSON(Object object)
+    {
+        Gson gson = new Gson();
+        String json = gson.toJson(object);
+
+        return new JSONObject(json);
     }
 }
