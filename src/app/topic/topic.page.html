@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>{{topic}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-button (click)="getUsers()">Display subscribed users</ion-button>
+
+  <div *ngIf="users.length != 0">
+    <h2 *ngFor="let user of users">{{users.indexOf(user) + 1}}. {{user.username}}</h2>
+  </div>
+
+</ion-content>

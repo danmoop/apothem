@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import axios from 'axios';
 import { AlertController, NavController, ToastController, MenuController } from '@ionic/angular';
+import { NavigationExtras } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -159,6 +160,11 @@ export class HomePage {
         this.refreshProfile();
       })
       .catch(err => this.alert("Error", err));
+  }
+
+  exploreTopic(topic)
+  {
+    this.navCtrl.navigateForward('/topic/' + topic);
   }
 
   getUser()

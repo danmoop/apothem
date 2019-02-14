@@ -25,7 +25,7 @@
             <ion-card-title>{{ topic }}</ion-card-title>
           </ion-card-header>
       
-          <ion-button fill="clear">Explore</ion-button>
+          <ion-button fill="clear" (click)="exploreTopic(topic)">Explore</ion-button>
           <ion-button color="danger" fill="clear" (click)="unsubscribe(topic)">Unsubscribe</ion-button>
         </ion-card>
         <ion-button shape="round" fill="clear" (click)="editTopics()">Configure your topics</ion-button>
@@ -37,9 +37,7 @@
   <div *ngIf="user.topics.length == 0">
       <div text-center>
           <h1>Explore basic topics</h1>
-      
-          <ion-button fill="clear">Global topic search</ion-button>
-        </div>
+      </div>
       
         <ion-card *ngFor="let card of cards">
           <ion-card-header>
@@ -51,7 +49,6 @@
             {{ card.content }}
           </ion-card-content>
       
-          <ion-button fill="clear">Explore</ion-button>
           <ion-button color="tertiary" fill="clear" (click)="subscribe(card.name)">Subscribe</ion-button>
         </ion-card>
   </div>

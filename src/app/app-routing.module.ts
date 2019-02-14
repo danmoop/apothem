@@ -14,7 +14,8 @@ const routes: Routes = [
   { path: 'authorization', loadChildren: './authorization/authorization.module#AuthorizationPageModule' },
   { path: 'createaccount', loadChildren: './createaccount/createaccount.module#CreateaccountPageModule' },
   { path: 'signin', loadChildren: './signin/signin.module#SigninPageModule' },
-  { path: 'edittopics', loadChildren: './edittopics/edittopics.module#EdittopicsPageModule' }
+  { path: 'edittopics', loadChildren: './edittopics/edittopics.module#EdittopicsPageModule' },
+  { path: 'topic/:topic', loadChildren: './topic/topic.module#TopicPageModule' }
 ];
 
 @NgModule({
