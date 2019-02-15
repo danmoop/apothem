@@ -1,5 +1,6 @@
 package com.danmoop.apothem.MainApplication.Controller;
 
+import com.danmoop.apothem.MainApplication.DAO.UserDAO;
 import com.danmoop.apothem.MainApplication.Model.User;
 import com.danmoop.apothem.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +14,12 @@ import java.util.UUID;
 public class AuthController
 {
     @Autowired
-    UserService userService;
+    private UserDAO userDAO;
 
     @PostMapping("/register")
     public String registerResponse(@RequestBody User user)
     {
-        User userDB = userService.findByUsername(user.getUsername());
+        User userDB = userDAO.findByUsername(user.getUsername());
 
         if(userDB != null)
             return "This username is already taken";
@@ -26,7 +27,7 @@ public class AuthController
         user.setToken(UUID.randomUUID().toString());
         user.setTopics(new ArrayList<>());
 
-        userService.save(user);
+        userDAO.save(user);
 
         return "Success";
     }
@@ -34,13 +35,13 @@ public class AuthController
     @PostMapping("/login")
     public User userLogin(@RequestBody User user)
     {
-        User userDB = userService.findByUsername(user.getUsername());
+        User userDB = userDAO.findByUsername(user.getUsername());
 
         if(userDB != null && user.getPassword().equals(userDB.getPassword()))
         {
             userDB.setToken(UUID.randomUUID().toString());
 
-            userService.save(userDB);
+            userDAO.save(userDB);
 
             userDB.setPassword(""); // no need
             return userDB;
@@ -52,7 +53,7 @@ public class AuthController
     @PostMapping("/getUser")
     public User getUser(@RequestBody User user)
     {
-        User userDB = userService.findByUsername(user.getUsername());
+        User userDB = userDAO.findByUsername(user.getUsername());
 
         if(isUserValid(user) && userDB != null)
             return userDB;
@@ -62,7 +63,7 @@ public class AuthController
 
     private boolean isUserValid(User user)
     {
-        User userDB = userService.findByUsername(user.getUsername());
+        User userDB = userDAO.findByUsername(user.getUsername());
 
         return userDB != null && user.getToken().equals(userDB.getToken()) && userDB.getName().equals(user.getName());
     }

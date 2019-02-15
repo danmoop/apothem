@@ -1,7 +1,7 @@
 package com.danmoop.apothem.MainApplication.Controller;
 
+import com.danmoop.apothem.MainApplication.DAO.UserDAO;
 import com.danmoop.apothem.MainApplication.Model.User;
-import com.danmoop.apothem.MainApplication.Service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import org.json.JSONObject;
@@ -19,12 +19,12 @@ import java.util.List;
 public class ProfileController
 {
     @Autowired
-    private UserService userService;
+    private UserDAO userDAO;
 
     @PostMapping("/applyNewTopics")
     public void applyNewTopics(@RequestBody User user)
     {
-        User userDB = userService.findByUsername(user.getUsername());
+        User userDB = userDAO.findByUsername(user.getUsername());
 
         if (isUserValid(user) && userDB != null)
         {
@@ -32,14 +32,14 @@ public class ProfileController
 
             userDB.setTopics(topics);
 
-            userService.save(userDB);
+            userDAO.save(userDB);
         }
     }
 
     @PostMapping("/subscribeToTopic")
     public void subscribeToTopic(@RequestBody Object object) throws IOException
     {
-        JSONObject jsonObject = getJSON(object);
+        JSONObject jsonObject = userDAO.getJSON(object);
 
         ObjectMapper mapper = new ObjectMapper();
         User user = mapper.readValue(jsonObject.get("user").toString(), User.class);
@@ -47,44 +47,36 @@ public class ProfileController
 
         if(isUserValid(user))
         {
-            User userDB = userService.findByUsername(user.getUsername());
+            User userDB = userDAO.findByUsername(user.getUsername());
 
             userDB.addTopic(topic);
 
-            userService.save(userDB);
+            userDAO.save(userDB);
         }
     }
 
     @PostMapping("/unsubscribeFromTopic")
     public void unsubscribeFromTopic(@RequestBody Object object) throws IOException
     {
-        JSONObject jsonObject = getJSON(object);
+        JSONObject jsonObject = userDAO.getJSON(object);
         ObjectMapper mapper = new ObjectMapper();
         User user = mapper.readValue(jsonObject.get("user").toString(), User.class);
         String topic = jsonObject.get("item").toString();
 
         if(isUserValid(user))
         {
-            User userDB = userService.findByUsername(user.getUsername());
+            User userDB = userDAO.findByUsername(user.getUsername());
 
             userDB.removeTopic(topic);
 
-            userService.save(userDB);
+            userDAO.save(userDB);
         }
     }
 
     private boolean isUserValid(User user)
     {
-        User userDB = userService.findByUsername(user.getUsername());
+        User userDB = userDAO.findByUsername(user.getUsername());
 
         return userDB != null && user.getToken().equals(userDB.getToken()) && userDB.getName().equals(user.getName());
-    }
-
-    private JSONObject getJSON(Object object)
-    {
-        Gson gson = new Gson();
-        String json = gson.toJson(object);
-
-        return new JSONObject(json);
     }
 }

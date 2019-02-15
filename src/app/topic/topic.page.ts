@@ -36,25 +36,21 @@ export class TopicPage implements OnInit {
     axios.post(this.API + "isUserSubscribed", user1)
       .then(response => {
         if(response.data == false) this.navCtrl.navigateRoot('/home');
-
-        else console.log("Everything seems to be right!");
       })
+      .catch(err => console.log(err));
+  }
+
+  ionViewDidEnter()
+  {
+    axios.post(this.API + "getUsersSubscribedOnTopic", {
+      topic: this.topic
+    })
+      .then(response => this.users = response.data)
       .catch(err => console.log(err));
   }
 
   getUser()
   {
     return JSON.parse(localStorage.getItem('user'));
-  }
-
-  getUsers()
-  {
-    console.log(this.topic);
-
-    axios.post(this.API + "getUsersSubscribedOnTopic", {
-      topic: this.topic
-    })
-      .then(response => this.users = response.data)
-      .catch(err => console.log(err));
   }
 }

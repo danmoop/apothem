@@ -1,15 +1,15 @@
-package com.danmoop.apothem.MainApplication.Service;
+package com.danmoop.apothem.MainApplication.Interface;
 
 import com.danmoop.apothem.MainApplication.Model.User;
-import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
-public interface UserService extends MongoRepository<User, String>
+public interface UserInterface
 {
     User findByUsername(String username);
     User findByName(String name);
     User findByToken(String token);
-
     List<User> findAll();
+    List<User> getUsersSubscribedTo(Object topicObject);
+    void save(User user);
 }
