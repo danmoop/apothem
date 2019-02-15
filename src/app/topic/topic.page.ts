@@ -17,6 +17,8 @@ export class TopicPage implements OnInit {
 
   public users = [];
 
+  public posts = [];
+
   constructor(private navCtrl: NavController, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -38,6 +40,8 @@ export class TopicPage implements OnInit {
         if(response.data == false) this.navCtrl.navigateRoot('/home');
       })
       .catch(err => console.log(err));
+
+    this.getAllPosts();
   }
 
   ionViewDidEnter()
@@ -52,5 +56,28 @@ export class TopicPage implements OnInit {
   getUser()
   {
     return JSON.parse(localStorage.getItem('user'));
+  }
+
+  createTopic() {
+    
+    var post = {
+      author: this.getUser().username,
+      title: "Random",
+      topic: this.topic
+    }
+
+    axios.post(this.API + "createSomePosts", post)
+      .then(response => console.log(response))
+      .catch(err => console.log(err));
+  }
+
+  getAllPosts(event) {
+    axios.post(this.API + "getAllPosts", {topic: this.topic})
+    .then(response => {
+      this.posts = response.data;
+
+      if(event !== undefined) event.target.complete();
+    })
+    .catch(err => console.log(err));
   }
 }

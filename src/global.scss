@@ -15,7 +15,7 @@
 }
 
 .eina {
-    font-family: "eina";
+    font-family: "eina", var(--ion-font-family,inherit);
 }
 
 .divider {
@@ -23,7 +23,6 @@
     background: #f3f3f3;
     padding: 1px;
 }
-
 
 @font-face {
     font-family: "eina";

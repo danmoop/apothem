@@ -42,18 +42,14 @@ public class UserDAO implements UserInterface
     }
 
     @Override
-    public List<User> getUsersSubscribedTo(Object topicObject)
+    public List<User> getUsersSubscribedTo(String topic)
     {
         List<User> usersSubscribed = new ArrayList<>();
         List<User> allUsers = userService.findAll();
 
-        String topic = getJSON(topicObject).get("topic").toString();
-
-        for (int i = 0; i < allUsers.size(); i++)
+        for (User user : allUsers)
         {
-            User user = allUsers.get(i);
-
-            if(user.getTopics().indexOf(topic) != -1)
+            if (user.getTopics().indexOf(topic) != -1)
             {
                 // We can't send actual user object to a client
                 user.setPassword(null);

@@ -10,6 +10,6 @@ public interface UserInterface
     User findByName(String name);
     User findByToken(String token);
     List<User> findAll();
-    List<User> getUsersSubscribedTo(Object topicObject);
+    List<User> getUsersSubscribedTo(String topic);
     void save(User user);
 }

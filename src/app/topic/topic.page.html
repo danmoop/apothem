@@ -6,8 +6,34 @@
 
 <ion-content padding>
 
+
+  <ion-refresher slot="fixed" (ionRefresh)="getAllPosts($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <div *ngIf="users.length != 0">
     <h2 *ngFor="let user of users">{{users.indexOf(user) + 1}}. {{user.username}}</h2>
   </div>
+
+  <ion-button (click)="createTopic()">Create topic</ion-button>
+  <ion-button color="danger" (click)="getAllPosts()">Get posts</ion-button>
+
+  <hr>
+
+  <ion-card *ngFor="let post of posts">
+    <ion-card-header>
+      <ion-card-title>{{ post.title }}</ion-card-title>
+      <ion-card-subtitle>{{ post.author }}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      Keep close to Nature's heart... and break clear away, once in awhile,
+      and climb a mountain or spend a week in the woods. Wash your spirit clean.
+    </ion-card-content>
+  </ion-card>
+
+  <h2 text-center *ngIf="posts.length == 0">No posts created yet :(</h2>
 
 </ion-content>
