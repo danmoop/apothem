@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@CrossOrigin(value = "http://localhost:8100")
+@CrossOrigin
 public class TopicController
 {
     @Autowired

@@ -15,7 +15,7 @@ export class CreateaccountPage implements OnInit {
   private username = "";
   private password = "";
 
-  API = "http://localhost:1337/";
+  public API = "http://localhost:1337/";
 
   constructor(private navCtrl: NavController, private alertCtrl: AlertController) { }
 

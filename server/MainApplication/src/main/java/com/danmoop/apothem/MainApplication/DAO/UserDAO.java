@@ -74,4 +74,11 @@ public class UserDAO implements UserInterface
 
         return new JSONObject(json);
     }
+
+    public boolean isUserValid(User user)
+    {
+        User userDB = findByUsername(user.getUsername());
+
+        return userDB != null && user.getToken().equals(userDB.getToken()) && userDB.getName().equals(user.getName());
+    }
 }

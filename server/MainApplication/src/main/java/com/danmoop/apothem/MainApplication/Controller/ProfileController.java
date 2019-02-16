@@ -3,7 +3,6 @@ package com.danmoop.apothem.MainApplication.Controller;
 import com.danmoop.apothem.MainApplication.DAO.UserDAO;
 import com.danmoop.apothem.MainApplication.Model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -15,7 +14,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@CrossOrigin(value = "http://localhost:8100")
+@CrossOrigin
 public class ProfileController
 {
     @Autowired
@@ -26,7 +25,7 @@ public class ProfileController
     {
         User userDB = userDAO.findByUsername(user.getUsername());
 
-        if (isUserValid(user) && userDB != null)
+        if (userDAO.isUserValid(user) && userDB != null)
         {
             List<String> topics = user.getTopics();
 
@@ -45,7 +44,7 @@ public class ProfileController
         User user = mapper.readValue(jsonObject.get("user").toString(), User.class);
         String topic = jsonObject.get("item").toString();
 
-        if(isUserValid(user))
+        if(userDAO.isUserValid(user))
         {
             User userDB = userDAO.findByUsername(user.getUsername());
 
@@ -63,7 +62,7 @@ public class ProfileController
         User user = mapper.readValue(jsonObject.get("user").toString(), User.class);
         String topic = jsonObject.get("item").toString();
 
-        if(isUserValid(user))
+        if(userDAO.isUserValid(user))
         {
             User userDB = userDAO.findByUsername(user.getUsername());
 
@@ -71,12 +70,5 @@ public class ProfileController
 
             userDAO.save(userDB);
         }
-    }
-
-    private boolean isUserValid(User user)
-    {
-        User userDB = userDAO.findByUsername(user.getUsername());
-
-        return userDB != null && user.getToken().equals(userDB.getToken()) && userDB.getName().equals(user.getName());
     }
 }

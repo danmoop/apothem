@@ -172,4 +172,9 @@ export class HomePage {
     return JSON.parse(localStorage.getItem('user'));
   }
 
+  openCreatePostPage()
+  {
+    this.navCtrl.navigateForward('/create-post');
+  }
+
 }

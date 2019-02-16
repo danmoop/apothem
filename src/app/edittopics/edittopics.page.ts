@@ -9,7 +9,7 @@ import { NavController, AlertController } from '@ionic/angular';
 })
 export class EdittopicsPage implements OnInit {
 
-  API = "http://localhost:1337/";
+  public API = "http://localhost:1337/";
 
   searchText = "";
 
@@ -175,5 +175,10 @@ export class EdittopicsPage implements OnInit {
       subHeader: null,
       message: error
     }).then(alert => alert.present());
+  }
+
+  public getTopics()
+  {
+    return this.topics;
   }
 }

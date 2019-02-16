@@ -7,11 +7,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content *ngIf="authorized" class="has-tabs-bottom">
+<ion-content *ngIf="authorized">
 
   <ion-list text-center>
     <ion-list-header>
-      <ion-label class="eina bold">Topics according to your choice <ion-badge color="primary">{{user.topics.length}}</ion-badge></ion-label>
+      <ion-label class="eina bold">Topics according to your choice <ion-badge color="primary">{{user.topics.length}}</ion-badge>
+      </ion-label>
     </ion-list-header>
     <div class="no-topics" *ngIf="user.topics.length == 0">
       <h4>Looks like you haven't configured preferable topics yet</h4>
@@ -20,40 +21,52 @@
 
     <div class="topics" *ngIf="user.topics.length != 0">
       <ion-card *ngFor="let topic of user.topics">
-          <ion-card-header>
-            <ion-card-subtitle>Topic</ion-card-subtitle>
-            <ion-card-title>{{ topic }}</ion-card-title>
-          </ion-card-header>
-      
-          <ion-button fill="clear" (click)="exploreTopic(topic)">Explore</ion-button>
-          <ion-button color="danger" fill="clear" (click)="unsubscribe(topic)">Unsubscribe</ion-button>
-        </ion-card>
-        <ion-button shape="round" fill="clear" (click)="editTopics()">Configure your topics</ion-button>
-      </div>
-  </ion-list>
+        <ion-card-header>
+          <ion-card-subtitle>Topic</ion-card-subtitle>
+          <ion-card-title>{{ topic }}</ion-card-title>
+        </ion-card-header>
 
+        <ion-button fill="clear" (click)="exploreTopic(topic)">Explore</ion-button>
+        <ion-button color="danger" fill="clear" (click)="unsubscribe(topic)">Unsubscribe</ion-button>
+      </ion-card>
+      <ion-button shape="round" fill="clear" (click)="editTopics()">Configure your topics</ion-button>
+    </div>
+  </ion-list>
   <hr class="divider">
 
   <div *ngIf="user.topics.length == 0">
-      <div text-center>
-          <h1>Explore basic topics</h1>
-      </div>
-      
-        <ion-card *ngFor="let card of cards">
-          <ion-card-header>
-            <ion-card-subtitle>Topic</ion-card-subtitle>
-            <ion-card-title>{{ card.name }}</ion-card-title>
-          </ion-card-header>
-      
-          <ion-card-content>
-            {{ card.content }}
-          </ion-card-content>
-      
-          <ion-button color="tertiary" fill="clear" (click)="subscribe(card.name)">Subscribe</ion-button>
-        </ion-card>
+    <div text-center>
+      <h1>Explore basic topics</h1>
+    </div>
+
+    <ion-card *ngFor="let card of cards">
+      <ion-card-header>
+        <ion-card-subtitle>Topic</ion-card-subtitle>
+        <ion-card-title>{{ card.name }}</ion-card-title>
+      </ion-card-header>
+
+      <ion-card-content>
+        {{ card.content }}
+      </ion-card-content>
+
+      <ion-button color="tertiary" fill="clear" (click)="subscribe(card.name)">Subscribe</ion-button>
+    </ion-card>
   </div>
 
-  <h2>{{message}}</h2>
-
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+    <ion-fab-button>
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="start">
+      <ion-button class="fab-inside-btn" color="light" (click)="editTopics()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        Add topic
+      </ion-button>
+      <ion-button class="fab-inside-btn" color="light" (click)="openCreatePostPage()">
+        <ion-icon name="brush"></ion-icon>
+        Post
+      </ion-button>
+    </ion-fab-list>
+  </ion-fab>
 
 </ion-content>
