@@ -48,6 +48,8 @@ export class SigninPage implements OnInit {
         })
         .catch(err => this.alert("Error", err));
     }
+
+    else this.alert("Error", "All fields are required!");
   }
 
   alert(header, message)

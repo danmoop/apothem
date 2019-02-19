@@ -1,6 +1,9 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>{{topic}}</ion-title>
+    <ion-back-button icon="arrow-round-back" text="" defaultHref="home"></ion-back-button>
+    <ion-title>{{topic}}
+        <ion-badge color="primary">{{ usersAmount }}</ion-badge>
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -13,21 +16,16 @@
     </ion-refresher-content>
   </ion-refresher>
 
-  <div *ngIf="users.length != 0">
-    <h2 *ngFor="let user of users">{{users.indexOf(user) + 1}}. {{user.username}}</h2>
-  </div>
-
-  <ion-button color="danger" (click)="getAllPosts()">Get posts</ion-button>
-
   <hr>
 
   <ion-card *ngFor="let post of posts">
     <ion-card-header>
       <ion-card-title>{{ post.title }}</ion-card-title>
-      <ion-card-subtitle>by {{ post.author }}</ion-card-subtitle>
+      <br>
+      <ion-card-subtitle>Posted by {{ post.author }} {{ returnDate(post.createdOn) }}</ion-card-subtitle>
     </ion-card-header>
 
-    <ion-card-content>
+    <ion-card-content class="topicContent">
       {{ post.content }}
     </ion-card-content>
   </ion-card>

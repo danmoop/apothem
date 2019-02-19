@@ -45,10 +45,10 @@ public class TopicController
     }
 
     @PostMapping("/getUsersSubscribedOnTopic")
-    private List<User> getUsersSubscribedOn(@RequestBody Object topicObject)
+    private int getUsersSubscribedOn(@RequestBody Object topicObject)
     {
         JSONObject obj = userDAO.getJSON(topicObject);
 
-        return userDAO.getUsersSubscribedTo(obj.get("topic").toString());
+        return userDAO.getUsersSubscribedTo(obj.get("topic").toString()).size();
     }
 }

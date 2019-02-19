@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { NavParams, NavController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 
+import * as moment from 'moment';
+
 import axios from 'axios';
 
 @Component({
@@ -11,11 +13,11 @@ import axios from 'axios';
 })
 export class TopicPage implements OnInit {
 
-  public topic: string = "";
+  public topic = "";
 
   public API = "http://localhost:1337/";
 
-  public users = [];
+  public usersAmount = 0;
 
   public posts = [];
 
@@ -49,7 +51,7 @@ export class TopicPage implements OnInit {
     axios.post(this.API + "getUsersSubscribedOnTopic", {
       topic: this.topic
     })
-      .then(response => this.users = response.data)
+      .then(response => this.usersAmount = response.data)
       .catch(err => console.log(err));
   }
 
@@ -62,6 +64,7 @@ export class TopicPage implements OnInit {
     axios.post(this.API + "getAllPosts", {topic: this.topic})
     .then(response => {
       this.posts = response.data;
+      this.posts.reverse();
     })
     .catch(err => console.log(err));
   }
@@ -70,9 +73,16 @@ export class TopicPage implements OnInit {
     axios.post(this.API + "getAllPosts", {topic: this.topic})
     .then(response => {
       this.posts = response.data;
-
+      this.posts.reverse();
+      
       if(event !== undefined) event.target.complete();
     })
     .catch(err => console.log(err));
   }
+
+  returnDate(createdOn)
+  {
+    return moment(createdOn,'DD.MM.YYYY HH:mm:ss').fromNow();
+  }
+
 }

@@ -45,6 +45,7 @@ public class BoardController
 
         if(userDAO.isUserValid(user))
         {
+            post.generateTime();
             postService.save(post);
 
             return true;
