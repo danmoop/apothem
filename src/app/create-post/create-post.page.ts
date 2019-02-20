@@ -4,6 +4,7 @@ import { EdittopicsPage } from './../edittopics/edittopics.page';
 import { AlertController, NavController, LoadingController } from '@ionic/angular';
 
 import axios from 'axios';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-create-post',
@@ -108,9 +109,17 @@ export class CreatePostPage implements OnInit {
     }
   ];
   
-  constructor(private loadingCtrl: LoadingController, private navCtrl: NavController, private alertCtrl: AlertController) { }
+  constructor(private route: ActivatedRoute, private loadingCtrl: LoadingController, private navCtrl: NavController, private alertCtrl: AlertController) { }
 
   ngOnInit() {
+  }
+
+  ionViewDidEnter()
+  {
+    var topic = this.route.snapshot.paramMap.get('topic');
+
+    if(topic != '') 
+      this.selectedTopic = topic;
   }
 
   post()

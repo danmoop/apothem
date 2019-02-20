@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="topic"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{post.title}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-spinner name="lines" *ngIf="!loaded" text-center></ion-spinner>
+
+  <div *ngIf="loaded">
+    <ion-card-header>
+      <ion-card-title class="eina">{{ post.title }}</ion-card-title>
+      <br>
+      <ion-card-subtitle>Posted by {{ post.author }} {{ returnDate(post.createdOn) }}</ion-card-subtitle>
+    </ion-card-header>
+    <hr class="divider">
+    <p class="eina">{{post.content}}</p>
+  </div>
+  
+</ion-content>

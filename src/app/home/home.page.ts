@@ -58,7 +58,8 @@ export class HomePage {
       .catch(err => console.log(err));
   }
 
-  getID(){ 
+  getID()
+  { 
     axios.get(this.API + "/getId")
       .then(response => this.message = response.data)
       .catch(err => console.log(err));
@@ -141,7 +142,8 @@ export class HomePage {
     }).then(alert => alert.present());
   }
 
-  subscribe(topic) {
+  subscribe(topic) 
+  {
 
     var _user = this.getUser();
 
@@ -174,6 +176,6 @@ export class HomePage {
 
   openCreatePostPage()
   {
-    this.navCtrl.navigateForward('/create-post');
+    this.navCtrl.navigateForward('/create-post/');
   }
 }

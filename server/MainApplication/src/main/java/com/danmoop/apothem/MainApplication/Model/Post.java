@@ -5,6 +5,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 @Document(value = "posts")
 public class Post
@@ -14,6 +15,16 @@ public class Post
     private String title;
     private String content;
     private String createdOn;
+
+    private List<Comment> comments;
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
 
     public String getContent()
     {

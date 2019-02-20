@@ -74,6 +74,7 @@ export class TopicPage implements OnInit {
     .catch(err => console.log(err));
     
     this.getUsersSubscribed();
+    console.log(this.posts);
   }
 
   refreshAllPosts(event) {
@@ -87,10 +88,22 @@ export class TopicPage implements OnInit {
     .catch(err => console.log(err));
 
     this.getUsersSubscribed();
+    console.log(this.posts);
   }
 
   returnDate(createdOn)
   {
     return moment(createdOn,'DD-MM-YYYY HH:mm:ss').fromNow();
+  }
+
+  post()
+  {
+    this.navCtrl.navigateForward('/create-post/' + this.topic);
+  }
+
+  viewPost(post)
+  {
+    localStorage.setItem('post', JSON.stringify(post));
+    this.navCtrl.navigateForward('/view-post');
   }
 }

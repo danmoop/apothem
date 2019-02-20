@@ -1,14 +1,18 @@
 <ion-header>
   <ion-toolbar>
-    <ion-back-button icon="arrow-round-back" text="" defaultHref="home"></ion-back-button>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="post()">Post</ion-button>
+    </ion-buttons>
     <ion-title>{{topic}}
-        <ion-badge color="primary">{{ usersAmount }}</ion-badge>
+      <ion-badge color="primary">{{ usersAmount }}</ion-badge>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content padding>
-
 
   <ion-refresher slot="fixed" (ionRefresh)="refreshAllPosts($event)">
     <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
@@ -18,7 +22,7 @@
 
   <hr>
 
-  <ion-card *ngFor="let post of posts">
+  <ion-card *ngFor="let post of posts" (click)="viewPost(post)">
     <ion-card-header>
       <ion-card-title>{{ post.title }}</ion-card-title>
       <br>

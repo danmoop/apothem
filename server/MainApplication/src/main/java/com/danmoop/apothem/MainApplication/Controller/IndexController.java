@@ -10,6 +10,7 @@ import java.util.UUID;
 @CrossOrigin
 public class IndexController
 {
+
     @GetMapping("/hello")
     public String hello()
     {

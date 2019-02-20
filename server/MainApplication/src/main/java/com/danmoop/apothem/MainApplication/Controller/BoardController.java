@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -44,6 +45,7 @@ public class BoardController
         if(userDAO.isUserValid(user))
         {
             post.generateTime();
+            post.setComments(new ArrayList<>());
             postService.save(post);
 
             return true;
