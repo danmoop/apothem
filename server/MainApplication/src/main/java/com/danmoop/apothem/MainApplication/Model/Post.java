@@ -2,6 +2,8 @@ package com.danmoop.apothem.MainApplication.Model;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Document(value = "posts")
@@ -59,6 +61,12 @@ public class Post
 
     public void generateTime()
     {
-        this.createdOn = new Date().toLocaleString();
+        LocalDateTime now = LocalDateTime.now();
+
+        String month = String.valueOf(now.getMonthValue());
+
+        if(month.length() == 1) month = "0" + month;
+
+        this.createdOn = now.getDayOfMonth() + "-" + month + "-" + now.getYear() + " " + now.getHour() + ":" + now.getMinute() + ":" + now.getSecond();
     }
 }

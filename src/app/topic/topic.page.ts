@@ -48,6 +48,11 @@ export class TopicPage implements OnInit {
 
   ionViewDidEnter()
   {
+    this.getUsersSubscribed();
+  }
+
+  getUsersSubscribed()
+  {
     axios.post(this.API + "getUsersSubscribedOnTopic", {
       topic: this.topic
     })
@@ -67,6 +72,8 @@ export class TopicPage implements OnInit {
       this.posts.reverse();
     })
     .catch(err => console.log(err));
+    
+    this.getUsersSubscribed();
   }
 
   refreshAllPosts(event) {
@@ -78,11 +85,12 @@ export class TopicPage implements OnInit {
       if(event !== undefined) event.target.complete();
     })
     .catch(err => console.log(err));
+
+    this.getUsersSubscribed();
   }
 
   returnDate(createdOn)
   {
-    return moment(createdOn,'DD.MM.YYYY HH:mm:ss').fromNow();
+    return moment(createdOn,'DD-MM-YYYY HH:mm:ss').fromNow();
   }
-
 }

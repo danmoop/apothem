@@ -135,7 +135,7 @@ export class CreatePostPage implements OnInit {
       axios.post(this.API + "publishAPost", finalObject)
         .then(response => {
           if(response.data == true)
-            this.navCtrl.navigateForward('/topic/' + this.selectedTopic);
+            this.navCtrl.navigateRoot('/topic/' + this.selectedTopic);
           else this.alert("Error", "Unable to post");
         })
         .catch(err => this.alert("Error", err));

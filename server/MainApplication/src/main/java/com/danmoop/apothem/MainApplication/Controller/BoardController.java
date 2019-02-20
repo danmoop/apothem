@@ -7,12 +7,10 @@ import com.danmoop.apothem.MainApplication.Service.PostService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
@@ -52,5 +50,13 @@ public class BoardController
         }
 
         return false;
+    }
+
+    @GetMapping("/getLocalDate")
+    public String now()
+    {
+        LocalDateTime now = LocalDateTime.now();
+
+        return now.getDayOfMonth() + "-" + now.getMonthValue() + "-" + now.getYear() + " " + now.getHour() + ":" + now.getMinute() + ":" + now.getSecond();
     }
 }

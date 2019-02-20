@@ -176,5 +176,4 @@ export class HomePage {
   {
     this.navCtrl.navigateForward('/create-post');
   }
-
 }
