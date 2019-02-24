@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -45,6 +45,7 @@ public class BoardController
         if(userDAO.isUserValid(user))
         {
             post.generateTime();
+            post.generateKey();
             post.setComments(new ArrayList<>());
             postService.save(post);
 
@@ -54,11 +55,37 @@ public class BoardController
         return false;
     }
 
+    @PostMapping("/deletePost")
+    public void deletePost(@RequestBody Object object) throws IOException
+    {
+        JSONObject obj = userDAO.getJSON(object);
+
+        Post post = objectMapper.readValue(obj.get("post").toString(), Post.class);
+
+        Post postDB = postService.findByKey(post.getKey());
+
+        User user = objectMapper.readValue(obj.get("user").toString(), User.class);
+
+        if(postDB != null && userDAO.isUserValid(user) && user.getUsername().equals(post.getAuthor()))
+        {
+            postService.delete(postDB);
+        }
+    }
+
     @GetMapping("/getLocalDate")
     public String now()
     {
-        LocalDateTime now = LocalDateTime.now();
+        return new Date().toLocaleString();
+    }
 
-        return now.getDayOfMonth() + "-" + now.getMonthValue() + "-" + now.getYear() + " " + now.getHour() + ":" + now.getMinute() + ":" + now.getSecond();
+    @PostMapping("/refreshPost")
+    public Post returnRefreshedPost(@RequestBody Post post)
+    {
+        Post postDB = postService.findByKey(post.getKey());
+
+        if(postDB != null)
+            return postDB;
+
+        return null;
     }
 }

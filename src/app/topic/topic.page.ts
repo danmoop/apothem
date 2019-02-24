@@ -21,6 +21,8 @@ export class TopicPage implements OnInit {
 
   public posts = [];
 
+  loaded = false;
+
   constructor(private navCtrl: NavController, private route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -70,11 +72,11 @@ export class TopicPage implements OnInit {
     .then(response => {
       this.posts = response.data;
       this.posts.reverse();
+      this.loaded = true;
     })
     .catch(err => console.log(err));
     
     this.getUsersSubscribed();
-    console.log(this.posts);
   }
 
   refreshAllPosts(event) {
@@ -93,7 +95,7 @@ export class TopicPage implements OnInit {
 
   returnDate(createdOn)
   {
-    return moment(createdOn,'DD-MM-YYYY HH:mm:ss').fromNow();
+    return moment(createdOn,'DD.MM.YYYY HH:mm:ss').fromNow();
   }
 
   post()

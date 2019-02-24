@@ -3,11 +3,23 @@
     <ion-buttons slot="start">
       <ion-back-button defaultHref="topic"></ion-back-button>
     </ion-buttons>
+    <ion-buttons slot="end" *ngIf="loaded && user.username == post.author">
+      <!-- <ion-button color="danger" fill="clear" (click)="deletePost()">Delete Post</ion-button> -->
+      <ion-button fill="clear" (click)="toggleMenu()">
+        <ion-icon name="menu"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>{{post.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding #content>
+
+
+  <ion-refresher slot="fixed" (ionRefresh)="refreshPost($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
 
   <ion-spinner name="lines" *ngIf="!loaded" text-center></ion-spinner>
 
@@ -19,6 +31,31 @@
     </ion-card-header>
     <hr class="divider">
     <p class="eina">{{post.content}}</p>
+
+    <hr class="divider">
+
+    <ion-list-header>Comments</ion-list-header>
+
+    <p *ngIf="post.comments.length == 0">No comments yet</p>
+
+    <ion-card *ngFor="let comment of post.comments">
+      <ion-card-header>
+        <ion-card-subtitle>{{comment.author}}, {{returnDate(comment.createdOn)}}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        {{comment.message}}
+      </ion-card-content>
+    </ion-card>
+
   </div>
-  
+
 </ion-content>
+
+<ion-footer style="border-top: 2px solid #dddddd;">
+  <ion-item>
+    <ion-input [(ngModel)]="commentText" type="text" placeholder="Your comment"></ion-input>
+    <ion-button (click)="sendComment()">
+      <ion-icon name="send"></ion-icon>
+    </ion-button>
+  </ion-item>
+</ion-footer>

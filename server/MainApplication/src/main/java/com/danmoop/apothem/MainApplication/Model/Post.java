@@ -1,20 +1,24 @@
 package com.danmoop.apothem.MainApplication.Model;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Document(value = "posts")
 public class Post
 {
+    @Id
+    private String id;
+
     private String author;
     private String topic;
     private String title;
     private String content;
     private String createdOn;
+    private String key;
 
     private List<Comment> comments;
 
@@ -24,6 +28,14 @@ public class Post
 
     public void setComments(List<Comment> comments) {
         this.comments = comments;
+    }
+
+    public void generateKey() {
+        this.key = UUID.randomUUID().toString();
+    }
+
+    public String getKey() {
+        return key;
     }
 
     public String getContent()
@@ -72,12 +84,18 @@ public class Post
 
     public void generateTime()
     {
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime localDateTime = LocalDateTime.now();
 
-        String month = String.valueOf(now.getMonthValue());
+        this.createdOn = localDateTime.getDayOfMonth()
+                + "." + localDateTime.getMonthValue()
+                + "." + localDateTime.getYear()
+                + " " + localDateTime.getHour()
+                + ":" + localDateTime.getMinute()
+                + ":" + localDateTime.getSecond();
+    }
 
-        if(month.length() == 1) month = "0" + month;
-
-        this.createdOn = now.getDayOfMonth() + "-" + month + "-" + now.getYear() + " " + now.getHour() + ":" + now.getMinute() + ":" + now.getSecond();
+    public void addComment(Comment comment)
+    {
+        comments.add(comment);
     }
 }

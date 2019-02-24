@@ -15,12 +15,13 @@
 <ion-content padding>
 
   <ion-refresher slot="fixed" (ionRefresh)="refreshAllPosts($event)">
-    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles"
-      refreshingText="Refreshing...">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles">
     </ion-refresher-content>
   </ion-refresher>
 
   <hr>
+
+  <ion-spinner *ngIf="!loaded"></ion-spinner>
 
   <ion-card *ngFor="let post of posts" (click)="viewPost(post)">
     <ion-card-header>

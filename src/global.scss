@@ -15,7 +15,7 @@
 }
 
 .eina {
-    font-family: "eina", var(--ion-font-family,inherit);
+    font-family: "eina", var(--ion-font-family, inherit);
 }
 
 .divider {
@@ -27,4 +27,13 @@
 @font-face {
     font-family: "eina";
     src: url("/../assets/fonts/Eina.woff2") format("woff2");
+}
+
+ion-spinner {
+    display: block;
+    margin: auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateY(-50%);
 }

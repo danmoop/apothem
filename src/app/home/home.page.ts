@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import axios from 'axios';
-import { AlertController, NavController, ToastController, MenuController } from '@ionic/angular';
+import { AlertController, NavController, ToastController, MenuController, Events } from '@ionic/angular';
 import { NavigationExtras } from '@angular/router';
 
 @Component({
@@ -37,7 +37,7 @@ export class HomePage {
     }
   ];
 
-  constructor(private menuCtrl: MenuController, private toastCtrl: ToastController, private alertCtrl: AlertController, private navCtrl: NavController) {
+  constructor(private events: Events, private menuCtrl: MenuController, private toastCtrl: ToastController, private alertCtrl: AlertController, private navCtrl: NavController) {
 
   }
 
@@ -79,6 +79,9 @@ export class HomePage {
   {
 
     let ls_user = this.getUser();
+
+
+    this.events.publish("setUser", ls_user);
     
     axios.post(this.API + "getUser", ls_user)
       .then(response => {

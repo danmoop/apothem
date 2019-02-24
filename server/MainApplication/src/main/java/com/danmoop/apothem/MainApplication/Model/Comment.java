@@ -1,5 +1,9 @@
 package com.danmoop.apothem.MainApplication.Model;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Date;
+
 public class Comment
 {
     private String author;
@@ -16,5 +20,17 @@ public class Comment
 
     public String getCreatedOn() {
         return createdOn;
+    }
+
+    public void generateTime()
+    {
+        LocalDateTime localDateTime = LocalDateTime.now();
+
+        this.createdOn = localDateTime.getDayOfMonth()
+                + "." + localDateTime.getMonthValue()
+                + "." + localDateTime.getYear()
+                + " " + localDateTime.getHour()
+                + ":" + localDateTime.getMinute()
+                + ":" + localDateTime.getSecond();
     }
 }
