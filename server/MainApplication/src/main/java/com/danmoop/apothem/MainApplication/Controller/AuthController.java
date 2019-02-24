@@ -2,11 +2,9 @@ package com.danmoop.apothem.MainApplication.Controller;
 
 import com.danmoop.apothem.MainApplication.DAO.UserDAO;
 import com.danmoop.apothem.MainApplication.Model.User;
-import com.danmoop.apothem.MainApplication.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.UUID;
 
 @RestController
@@ -24,8 +22,7 @@ public class AuthController
         if(userDB != null)
             return "This username is already taken";
 
-        user.setToken(UUID.randomUUID().toString());
-        user.setTopics(new ArrayList<>());
+        user.generateData();
 
         userDAO.save(user);
 

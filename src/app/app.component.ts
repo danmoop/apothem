@@ -22,7 +22,7 @@ export class AppComponent {
     },
     {
       title: 'Messages',
-      url: '/home',
+      url: '/messages',
       icon: 'mail'
     },
     {

@@ -19,12 +19,12 @@ export class AuthorizationPage implements OnInit {
 
   showModal()
   {
-    this.navCtrl.navigateBack('/createaccount');
+    this.navCtrl.navigateForward('/createaccount');
   }
 
   signIn()
   {
-    this.navCtrl.navigateBack('/signin');
+    this.navCtrl.navigateForward('/signin');
   }
 
 }

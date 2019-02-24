@@ -4,12 +4,11 @@
       <ion-back-button defaultHref="topic"></ion-back-button>
     </ion-buttons>
     <ion-buttons slot="end" *ngIf="loaded && user.username == post.author">
-      <!-- <ion-button color="danger" fill="clear" (click)="deletePost()">Delete Post</ion-button> -->
       <ion-button fill="clear" (click)="toggleMenu()">
         <ion-icon name="menu"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>{{post.title}}</ion-title>
+    <ion-title *ngIf="loaded">{{post.title}}</ion-title>
   </ion-toolbar>
 </ion-header>
 
@@ -27,7 +26,7 @@
     <ion-card-header>
       <ion-card-title class="eina">{{ post.title }}</ion-card-title>
       <br>
-      <ion-card-subtitle>Posted by {{ post.author }} {{ returnDate(post.createdOn) }}</ion-card-subtitle>
+      <ion-card-subtitle>Posted by <a (click)="openUserProfile(post.author)">{{ post.author }}</a> {{ returnDate(post.createdOn) }}</ion-card-subtitle>
     </ion-card-header>
     <hr class="divider">
     <p class="eina">{{post.content}}</p>

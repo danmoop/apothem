@@ -27,7 +27,7 @@ export class ViewPostPage implements OnInit {
   constructor(private toastCtrl: ToastController, private alertCtrl: AlertController, private navCtrl: NavController,
     private route: ActivatedRoute) {}
 
-  post = null;
+  post: object;
 
   loaded = false;
 
@@ -155,5 +155,9 @@ export class ViewPostPage implements OnInit {
         }
       ]
     }).then(alert => alert.present());
+  }
+
+  openUserProfile(user) {
+    this.navCtrl.navigateForward('profile-page/' + user);
   }
 }

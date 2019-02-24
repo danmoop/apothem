@@ -17,7 +17,10 @@ const routes: Routes = [
   { path: 'edittopics', loadChildren: './edittopics/edittopics.module#EdittopicsPageModule' },
   { path: 'topic/:topic', loadChildren: './topic/topic.module#TopicPageModule' },
   { path: 'create-post/:topic', loadChildren: './create-post/create-post.module#CreatePostPageModule' },
-  { path: 'view-post', loadChildren: './view-post/view-post.module#ViewPostPageModule' }
+  { path: 'view-post', loadChildren: './view-post/view-post.module#ViewPostPageModule' },
+  { path: 'messages', loadChildren: './messages/messages.module#MessagesPageModule' },
+  { path: 'profile-page/:username', loadChildren: './profile-page/profile-page.module#ProfilePagePageModule' },
+  { path: 'chat', loadChildren: './chat/chat.module#ChatPageModule' }
 ];
 
 @NgModule({

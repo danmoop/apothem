@@ -80,7 +80,6 @@ export class HomePage {
 
     let ls_user = this.getUser();
 
-
     this.events.publish("setUser", ls_user);
     
     axios.post(this.API + "getUser", ls_user)

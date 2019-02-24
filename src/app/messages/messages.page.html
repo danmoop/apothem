@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Messages</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+
+
+  <ion-refresher slot="fixed" (ionRefresh)="refreshProfile($event)">
+    <ion-refresher-content pullingIcon="arrow-dropdown" pullingText="Pull to refresh" refreshingSpinner="circles">
+    </ion-refresher-content>
+  </ion-refresher>
+
+
+  <ion-list-header *ngIf="user.dialogs.length != 0">Dialogs</ion-list-header>
+
+  <ion-list>
+    <ion-item *ngFor="let dialog of user.dialogs">
+      {{dialog.recepient}}
+      <ion-buttons slot="end">
+        <ion-button fill="clear" color="danger" push-right (click)="deleteDialog(dialog)">Delete</ion-button>
+      </ion-buttons>
+    </ion-item>
+  </ion-list>
+
+  <h4 *ngIf="user.dialogs.length == 0" text-center>You have no dialogs yet</h4>
+
+</ion-content>
