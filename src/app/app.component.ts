@@ -21,11 +21,6 @@ export class AppComponent {
       icon: 'people'
     },
     {
-      title: 'Messages',
-      url: '/messages',
-      icon: 'mail'
-    },
-    {
       title: 'Starred',
       url: '/home',
       icon: 'star-outline'
@@ -46,7 +41,6 @@ export class AppComponent {
 
     events.subscribe("setUser", (user) => {
       this.user = user;
-      console.log('accepted');
     })
   }
 
@@ -54,7 +48,6 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleBlackTranslucent();
       this.splashScreen.hide();
-
     });
   }
 

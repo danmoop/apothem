@@ -10,8 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -26,6 +24,8 @@ public class BoardController
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
+
+    // This method returns a list of topics depending on what topic user send in their request
     @PostMapping("/getAllPosts")
     public List<Post> getPosts(@RequestBody Object object)
     {
@@ -34,6 +34,10 @@ public class BoardController
         return postService.findByTopic(jsonObject.get("topic").toString());
     }
 
+    /*  Well, we send user object and post object, checks if user is valid
+        and then generate post data (besides post's title and content, that
+        are typed by user, but like timestamp and other)
+    */
     @PostMapping("/publishAPost")
     public boolean isPostPublished(@RequestBody Object object) throws IOException
     {
@@ -44,9 +48,7 @@ public class BoardController
 
         if(userDAO.isUserValid(user))
         {
-            post.generateTime();
-            post.generateKey();
-            post.setComments(new ArrayList<>());
+            post.generateData();
             postService.save(post);
 
             return true;
@@ -55,6 +57,10 @@ public class BoardController
         return false;
     }
 
+    /*
+        This method finds post by key and deletes it if authors are match
+        (So it checks that some user couldn't delete another user's post)
+     */
     @PostMapping("/deletePost")
     public void deletePost(@RequestBody Object object) throws IOException
     {
@@ -72,12 +78,10 @@ public class BoardController
         }
     }
 
-    @GetMapping("/getLocalDate")
-    public String now()
-    {
-        return new Date().toLocaleString();
-    }
-
+    /*
+        When something is added to the post, user sends a request to get the new post instance
+        (e.g new comments appear, timestamp changes etc)
+     */
     @PostMapping("/refreshPost")
     public Post returnRefreshedPost(@RequestBody Post post)
     {

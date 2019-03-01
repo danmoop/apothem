@@ -18,6 +18,15 @@ public class User
     private String password;
     private String token;
     private List<Dialog> dialogs;
+    private List<String> starredPosts;
+
+    public List<String> getStarredPosts() {
+        return starredPosts;
+    }
+
+    public void setStarredPosts(List<String> starredPosts) {
+        this.starredPosts = starredPosts;
+    }
 
     public List<Dialog> getDialogs() {
         return dialogs;
@@ -112,6 +121,17 @@ public class User
         setToken(UUID.randomUUID().toString());
         setTopics(new ArrayList<>());
         setDialogs(new ArrayList<>());
+        setStarredPosts(new ArrayList<>());
+    }
+
+    public void addStarredPost(String postKey)
+    {
+        starredPosts.add(postKey);
+    }
+
+    public void removeStarredPost(String postKey)
+    {
+        starredPosts.remove(postKey);
     }
 
     //This method is used when user instance sent to another user.

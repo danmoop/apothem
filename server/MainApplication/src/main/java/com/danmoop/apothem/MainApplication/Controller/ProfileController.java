@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -29,11 +28,11 @@ public class ProfileController
     {
         User userDB = userDAO.findByUsername(user.getUsername());
 
-        if (userDAO.isUserValid(user) && userDB != null)
+        if (userDAO.isUserValid(user))
         {
-            List<String> topics = user.getTopics();
+            List<String> topics = user.getTopics(); // list of topics user has chosen by setting checkboxes
 
-            userDB.setTopics(topics);
+            userDB.setTopics(topics); // apply new topics to user
 
             userDAO.save(userDB);
         }
@@ -84,46 +83,8 @@ public class ProfileController
 
         if(userDB != null)
         {
-            //We can't send that information to another user
+            //We can't send private information to another user
             userDB.hideData();
-
-            return userDB;
-        }
-
-        return null;
-    }
-
-    @PostMapping("/createNewDialog")
-    public void createNewDialog(@RequestBody Object object) throws IOException
-    {
-        JSONObject json = userDAO.getJSON(object);
-
-        String recepient = json.get("recepient").toString();
-        User user = mapper.readValue(json.get("user").toString(), User.class);
-
-        if(userDAO.isUserValid(user) && !user.isDialogExists(recepient))
-        {
-            User userDB = userDAO.findByUsername(user.getUsername());
-
-            userDB.addDialog(recepient);
-
-            userDAO.save(userDB);
-        }
-    }
-
-    @PostMapping("/removeDialog")
-    public User userAfterRemovingDialog(@RequestBody Object object) throws IOException {
-        JSONObject json = userDAO.getJSON(object);
-
-        User user = mapper.readValue(json.get("user").toString(), User.class);
-        Dialog dialog = mapper.readValue(json.get("dialog").toString(), Dialog.class);
-
-        if(userDAO.isUserValid(user))
-        {
-            User userDB = userDAO.findByUsername(user.getUsername());
-
-            userDB.removeDialog(dialog);
-            userDAO.save(userDB);
 
             return userDB;
         }

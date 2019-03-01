@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NavParams, NavController } from '@ionic/angular';
+import { NavParams, NavController, AlertController, ToastController } from '@ionic/angular';
 import { ActivatedRoute } from '@angular/router';
 
 import * as moment from 'moment';
@@ -23,7 +23,7 @@ export class TopicPage implements OnInit {
 
   loaded = false;
 
-  constructor(private navCtrl: NavController, private route: ActivatedRoute) { }
+  constructor(private toastCtrl: ToastController, private alertCtrl: AlertController, private navCtrl: NavController, private route: ActivatedRoute) { }
 
   ngOnInit() {
   }
@@ -107,5 +107,40 @@ export class TopicPage implements OnInit {
   {
     localStorage.setItem('post', JSON.stringify(post));
     this.navCtrl.navigateForward('/view-post');
+  }
+
+  unsubscribe(topic)
+  {
+    this.alertCtrl.create({
+      header: "Confirm",
+      subHeader: null,
+      message: "Do you really want to unsubscribe from " + topic + "?",
+      buttons: [
+        {
+          text: 'Yes',
+          handler: () => {
+            var _user = this.getUser();
+
+            var user1 = {
+              user: _user,
+              item: topic
+            }
+
+            axios.post(this.API + "unsubscribeFromTopic", user1)
+              .then(() => {
+                this.toastCtrl.create({
+                  message: "Unsubscribed from " + topic,
+                  duration: 2000
+                }).then(toast => toast.present());
+                this.navCtrl.navigateRoot('/home');
+              })
+              .catch(err => console.log(err));
+          }
+        },
+        {
+          text: 'No',
+        }
+      ]
+    }).then(alert => alert.present());
   }
 }

@@ -22,9 +22,9 @@ export class ProfilePagePage implements OnInit {
 
   ionViewDidEnter()
   {
-    var user = this.route.snapshot.paramMap.get('username');
+    var userName = this.route.snapshot.paramMap.get('username');
     
-    axios.post(this.API + "getUserProfile", {username: user})
+    axios.post(this.API + "getUserProfile", {username: userName})
       .then(response => {
 
         if(response.data != ''){
@@ -33,7 +33,10 @@ export class ProfilePagePage implements OnInit {
         }
 
         else
+        {
+          this.alert("Error", 'User ' + userName + ' is not found.');
           this.navCtrl.navigateRoot('/home');
+        }
       })
       .catch(err => this.alert("Error", err));
   }
@@ -47,21 +50,7 @@ export class ProfilePagePage implements OnInit {
       buttons: ['OK']
     }).then(alert => alert.present());
   }
-
-  createNewDialog()
-  {
-    var obj = {
-      user: this.getUser(),
-      recepient: this.user.username
-    }
-
-    axios.post(this.API + "createNewDialog", obj)
-      .then(response => {
-        this.navCtrl.navigateRoot('messages');
-      })
-      .catch(err => this.alert("Error", err));
-  }
-
+  
   getUser()
   {
     return JSON.parse(localStorage.getItem('user'));

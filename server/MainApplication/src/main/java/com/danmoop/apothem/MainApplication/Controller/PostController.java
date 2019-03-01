@@ -27,6 +27,9 @@ public class PostController
 
     private ObjectMapper mapper = new ObjectMapper();
 
+    /*
+        It organizes all the data sent by user and if everything is valid - publishes a post
+     */
     @PostMapping("/publishAComment")
     public Post publishAComment(@RequestBody Object object) throws IOException
     {

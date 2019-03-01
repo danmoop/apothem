@@ -26,16 +26,23 @@
     <ion-card-header>
       <ion-card-title class="eina">{{ post.title }}</ion-card-title>
       <br>
-      <ion-card-subtitle>Posted by <a (click)="openUserProfile(post.author)">{{ post.author }}</a> {{ returnDate(post.createdOn) }}</ion-card-subtitle>
+      <ion-card-subtitle>Posted by <a (click)="openUserProfile(post.author)">{{ post.author }}</a> {{
+        returnDate(post.createdOn) }}</ion-card-subtitle>
     </ion-card-header>
     <hr class="divider">
     <p class="eina">{{post.content}}</p>
 
+    <ion-button fill="clear">
+      <ion-icon name="star-outline"></ion-icon> 
+      <span>Star</span>
+    </ion-button>
+    
     <hr class="divider">
 
     <ion-list-header>Comments</ion-list-header>
 
     <p *ngIf="post.comments.length == 0">No comments yet</p>
+
 
     <ion-card *ngFor="let comment of post.comments">
       <ion-card-header>

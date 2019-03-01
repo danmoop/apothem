@@ -1,5 +1,8 @@
 <ion-header>
   <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="topic"></ion-back-button>
+    </ion-buttons>
     <ion-title *ngIf="loaded">Profile</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -10,17 +13,16 @@
 
   <div *ngIf="loaded" text-center>
     <h1 text-center>{{user.username}}</h1>
-    <ion-button fill="outline" (click)="createNewDialog()">Send a message</ion-button>
 
     <hr class="divider">
 
     <ion-list-header>{{user.username}} is subscribed on:</ion-list-header>
 
     <ion-card *ngFor="let topic of user.topics">
-        <ion-card-header>
-          <ion-card-subtitle>Topic</ion-card-subtitle>
-          <ion-card-title>{{ topic }}</ion-card-title>
-        </ion-card-header>
-      </ion-card>
+      <ion-card-header>
+        <ion-card-subtitle>Topic</ion-card-subtitle>
+        <ion-card-title>{{ topic }}</ion-card-title>
+      </ion-card-header>
+    </ion-card>
   </div>
 </ion-content>
